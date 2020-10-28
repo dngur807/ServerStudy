@@ -35,11 +35,12 @@ namespace CSBaseLib
     // 1 ~ 10000
     public enum PACKETID : int
     {
-
         // 시스템, 서버 - 서버
         SS_START = 8001,
 
         NTF_IN_CONNECT_CLIENT = 8011,
         NTF_IN_DISCONNECT_CLIENT = 8012,
+        REQ_LOGIN = 1002,
+        RES_LOGIN = 1003
     }
 }

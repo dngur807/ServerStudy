@@ -10,11 +10,14 @@ namespace ChatServer
 
             var serverOption = new ChatServerOption();
             serverOption.Name = "ChatServer";
-            serverOption.MaxConnectionNumber = 100;
+            serverOption.MaxConnectionNumber = 256;
             serverOption.Port = 8888;
             serverOption.MaxRequestLength = 1024;
-            serverOption.ReceiveBufferSize = 1024;
-            serverOption.SendBufferSize = 1024;
+            serverOption.ReceiveBufferSize = 16384;
+            serverOption.SendBufferSize = 16384;
+            serverOption.RoomMaxCount = 100;
+            serverOption.RoomMaxUserCount = 4;
+            serverOption.RoomStartNumber = 0;
 
             var server = new MainServer();
             server.InitConfig(serverOption);
