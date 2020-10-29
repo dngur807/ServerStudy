@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace MMOServer.Game
@@ -73,7 +74,7 @@ namespace MMOServer.Game
 
 		public bool ApplyMove(Player player, Vector2Int dest)
 		{
-			PositionInfo posInfo = player.Info.PosInfo;
+			/*PositionInfo posInfo = player.Info.PosInfo;
 			if (posInfo.PosX < MinX || posInfo.PosX > MaxX)
 				return false;
 			if (posInfo.PosY < MinY || posInfo.PosY > MaxY)
@@ -102,7 +103,7 @@ namespace MMOServer.Game
 
 			// 실제 좌표 이동
 			posInfo.PosX = dest.x;
-			posInfo.PosY = dest.y;
+			posInfo.PosY = dest.y;*/
 
 			return true;
 		}
@@ -133,3 +134,4 @@ namespace MMOServer.Game
 			}
 		}
 	}
+}

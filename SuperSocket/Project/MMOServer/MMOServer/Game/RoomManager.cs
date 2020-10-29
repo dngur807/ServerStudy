@@ -8,7 +8,6 @@ namespace MMOServer.Game
     {
         public static RoomManager Instance { get; } = new RoomManager();
         Dictionary<int, Room> m_roomList = new Dictionary<int, Room>();
-        object m_lock = new object();
 
         public void CreateRooms()
         {
@@ -20,20 +19,19 @@ namespace MMOServer.Game
             {
                 var roomNumber = (startNumber + i);
                 var room = new Room();
-                room.Init(i, roomNumber, maxUserCount , 1);
+                room.Init(i, roomNumber, maxUserCount, mapId : 1);
                 m_roomList.Add(roomNumber, room);
             }
         }
 
         public Room Find(int roomNum)
         {
-            lock (m_lock)
-            {
-                Room room = null;
-                if (m_roomList.TryGetValue(roomNum, out room))
-                    return room;
-                return null;
-            }
+
+            Room room = null;
+            if (m_roomList.TryGetValue(roomNum, out room))
+                return room;
+            return null;
+
         }
 
 

@@ -1,4 +1,5 @@
-﻿using MMOServer.Packet;
+﻿using MMOServer.Game;
+using MMOServer.Packet;
 using MMOServer.Session;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Protocol;
@@ -67,6 +68,7 @@ namespace MMOServer
 
         public void CreateComponent()
         {
+            RoomManager.Instance.CreateRooms();
             MainPacketProcessor = new PacketProcessor();
             MainPacketProcessor.CreateAndStart(this);
             MainLogger.Info("CreateComponent - Success");
@@ -111,6 +113,29 @@ namespace MMOServer
             Distribute(packet);
 
         }
+
+        public bool SendData(string sessionID, byte[] sendData)
+        {
+            var session = GetSessionByID(sessionID);
+            try
+            {
+                if (session == null)
+                {
+                    return false;
+                }
+
+                session.Send(sendData, 0, sendData.Length);
+            }
+            catch (Exception ex)
+            {
+                // TimeoutException 예외가 발생할 수 있다
+                MainServer.MainLogger.Error($"{ex.ToString()},  {ex.StackTrace}");
+                session.SendEndWhenSendingTimeOut();
+                session.Close();
+            }
+            return true;
+        }
+
 
         public void Distribute(ServerPacketData requestPacket)
         {

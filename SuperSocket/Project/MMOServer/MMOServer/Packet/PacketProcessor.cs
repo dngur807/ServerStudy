@@ -5,7 +5,7 @@ using System.Threading.Tasks.Dataflow;
 
 namespace MMOServer.Packet
 {
-    class PacketProcessor
+    public class PacketProcessor
     {
         bool IsThreadRunning = false;
         System.Threading.Thread ProcessThread = null;
@@ -14,10 +14,12 @@ namespace MMOServer.Packet
 
         PacketHandlerCommon CommonPacketHandler = new PacketHandlerCommon();
 
+        public static MainServer MainServer = null;
+
         public void CreateAndStart(MainServer mainServer)
         {
             IsThreadRunning = true;
-
+            MainServer = mainServer;
             RegistPacketHandler(mainServer);
             ProcessThread = new System.Threading.Thread(this.Process);
             ProcessThread.Start();

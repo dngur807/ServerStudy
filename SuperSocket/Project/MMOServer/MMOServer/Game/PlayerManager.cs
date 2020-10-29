@@ -13,6 +13,7 @@ namespace MMOServer.Game
         Dictionary<int, Player> m_players = new Dictionary<int, Player>();
 
         int m_playerId = 1;
+
         public Player Add()
         {
             Player player = new Player();

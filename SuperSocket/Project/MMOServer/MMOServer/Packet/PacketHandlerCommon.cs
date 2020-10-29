@@ -8,17 +8,17 @@ namespace MMOServer.Packet
 {
     public class PacketHandlerCommon : PacketHandler
     {
+        // 별도의 싱글 스레드에서 호출된다.
         public void RegistPacketHandler(Dictionary<int, Action<ServerPacketData>> packetHandlerMap)
         {
             packetHandlerMap.Add((int)PACKETID.NTF_IN_CONNECT_CLIENT, NotifyInConnectClient);
-
-            packetHandlerMap.Add((int)PACKETID.REQ_LOGIN, RequestLogin);
         }
 
+       
         public void NotifyInConnectClient(ServerPacketData requestData)
         {
-            var sessionID = packetData.SessionID;
-
+            var sessionID = requestData.SessionID;
+            
             var player = PlayerManager.Instance.Add();
             var temp_Info = player.Info;
             var temp_PosInfo = player.Info.posInfo;
@@ -32,9 +32,9 @@ namespace MMOServer.Packet
                 player.Info = temp_Info;
             }
 
-            RoomManager.Instance.Find(1).EnterGame(player);
+            RoomManager.Instance.Find(1).EnterGame(player, requestData.SessionID);
 
-            MainServer.MainLogger.Debug($"Current Connected Session Count: {ServerNetwork.SessionCount}");
+            MainServer.MainLogger.Debug("연결 성공 플레이어 생성");
         }
 
         public void RequestLogin(ServerPacketData packetData)

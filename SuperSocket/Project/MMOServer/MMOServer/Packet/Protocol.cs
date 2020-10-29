@@ -4,7 +4,6 @@ using System.Text;
 
 namespace MMOServer.Packet
 {
-    class Protocol
-    {
-    }
+
+   
 }
